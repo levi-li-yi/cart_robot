@@ -1,0 +1,6 @@
+{
+  "hello": "你好",
+  "@hello": {
+    "description": "A friendly greeting."
+  }
+}
