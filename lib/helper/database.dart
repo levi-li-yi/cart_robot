@@ -22,6 +22,6 @@ Future<String> getSQLiteVersion() async {
 void onCreateDatabase(db, version) async {
   // 创建一个用户基础信息表
   await db.execute(
-    "CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, age INTEGER, sex TEXT)",
+    "CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, age INTEGER, gender TEXT)",
   );
 }
