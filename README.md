@@ -1,3 +1,8 @@
+<!--
+ * @Author: Levi Li
+ * @Date: 2024-03-13 17:24:06
+ * @description: 
+-->
 # cart_robot
 
 ## dependencies依赖安装
@@ -28,3 +33,21 @@
 
 ## 自动生成arb->app_localization.dart文件
 ### 命令：flutter gen-l10n
+
+
+## 数据管理的三种策略
+- 从服务器获取和存储数据(Server)
+  - server
+  - bloc
+  - 业务页面
+- 从本地SQLite数据库获取和存储数据(Local)
+  - SQLite
+  - bloc
+  - 业务页面
+- 从第三方服务获取和存储数据(Hybrid)
+  - 字段转义
+  - third server
+  - SQLite(实时调用三方服务失败时需要，定时推送需要)
+  - bloc
+  - 业务页面
+
