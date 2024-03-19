@@ -17,6 +17,7 @@ import 'package:cart/helper/platform.dart';
 import 'package:cart/constant/database_constants.dart';
 import 'package:cart/helper/logger.dart';
 import 'package:cart/helper/database.dart';
+import 'package:cart/helper/env.dart';
 
 // user bloc、repository、service
 import 'package:cart/bloc/user/user_bloc.dart';
@@ -25,6 +26,12 @@ import 'package:cart/service/user_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // 环境配置
+  Config? config;
+  config = getEnv();
+  print('config ${config.appMode}');
+
   // 初始化路径，获取到系统相关的文档、缓存目录
   await PathHelper().init();
 

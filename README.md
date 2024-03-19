@@ -51,3 +51,13 @@
   - bloc
   - 业务页面
 
+
+<!-- run dev -->
+## run dev
+flutter run --dart-define=ENV=dev
+## 打包成在线版
+flutter build apk --dart-define=ENV=server
+## 打包成离线版
+flutter build apk --dart-define=ENV=local
+## 打包成第三方服务版
+flutter build apk --dart-define=ENV=hybrid
