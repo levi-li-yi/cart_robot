@@ -5,8 +5,10 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:cart/bloc/user/user_bloc.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
@@ -19,13 +21,41 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    super.initState();
+
+    _getUserList();
+  }
+
+  _getUserList() {
+    BlocProvider.of<UserBloc>(context).add(
+      GetUserListEvent(1, 10),
+    );
+  }
+
+  // 监听用户列表数据
+  void _listener(BuildContext context, UserState state) {
+    print('_listener user');
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Center(
-        child: Text(AppLocalizations.of(context)!.hello),
+        child: BlocConsumer<UserBloc, UserState>(
+          listener: _listener,
+          builder: (context, state) {
+            return ListView.builder(
+              itemCount: state.dataList!.length,
+              itemBuilder: (context, index) {
+                return ListTile(title: Text(state.dataList![index].name));
+              },
+            );
+          },
+        ),
       ),
     );
   }

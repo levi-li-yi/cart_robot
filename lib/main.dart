@@ -18,6 +18,11 @@ import 'package:cart/constant/database_constants.dart';
 import 'package:cart/helper/logger.dart';
 import 'package:cart/helper/database.dart';
 
+// user bloc、repository、service
+import 'package:cart/bloc/user/user_bloc.dart';
+import 'package:cart/sqflite/repository/user_repository.dart';
+import 'package:cart/service/user_service.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // 初始化路径，获取到系统相关的文档、缓存目录
@@ -49,7 +54,17 @@ void main() async {
     ),
   );
 
-  runApp(const MyApp());
+  final UserRepository userRepository = UserRepository(db);
+  final UserService userService = UserService();
+
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider<UserBloc>(
+        create: (BuildContext context) => UserBloc(userService, userRepository),
+      ),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 final GoRouter _router = GoRouter(routes: <RouteBase>[

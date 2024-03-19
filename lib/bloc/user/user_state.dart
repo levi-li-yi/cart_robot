@@ -18,4 +18,14 @@ class UserState extends BaseState {
       ..dataList = []
       ..netCount = 0;
   }
+
+  // 数据更新
+  UserState clone() {
+    return UserState()
+      ..netState = netState
+      ..hasMore = hasMore
+      ..isNetworkFinished = isNetworkFinished
+      ..dataList = dataList
+      ..netCount = netCount;
+  }
 }

@@ -29,7 +29,7 @@ abstract class BaseState {
   // 接口请求是否完成
   bool? isNetworkFinished;
   // 列表数据结果
-  List? dataList;
+  List? dataList = [];
   // 对象数据结果
   Object? data;
   // 网络加载次数
