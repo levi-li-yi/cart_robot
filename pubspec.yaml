@@ -26,6 +26,7 @@ dependencies:
   equatable: ^2.0.5
   dio_cache_interceptor: ^3.5.0
   dio_smart_retry: ^6.0.0
+  sqflite_common_ffi_web: ^0.4.2+1
 
 dev_dependencies:
   flutter_test:
