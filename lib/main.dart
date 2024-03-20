@@ -23,6 +23,9 @@ import 'package:cart/helper/env.dart';
 import 'package:cart/bloc/user/user_bloc.dart';
 import 'package:cart/sqflite/repository/user_repository.dart';
 import 'package:cart/service/user_service.dart';
+// setting bloc、repository
+import 'package:cart/bloc/setting/setting_bloc.dart';
+import 'package:cart/sqflite/repository/setting_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,11 +64,18 @@ void main() async {
     ),
   );
 
+  // 设置状态与持久化
+  final SettingRepository settingRepository = SettingRepository(db);
+  final SettingBloc settingBloc = SettingBloc(settingRepository);
+  // 用户状态与持久化
   final UserRepository userRepository = UserRepository(db);
   final UserService userService = UserService();
 
   runApp(MultiBlocProvider(
     providers: [
+      BlocProvider<SettingBloc>(
+        create: (BuildContext context) => SettingBloc(settingRepository),
+      ),
       BlocProvider<UserBloc>(
         create: (BuildContext context) => UserBloc(userService, userRepository),
       ),
@@ -87,26 +97,29 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      localizationsDelegates: const [
-        // 指定本地化的字符串和一些其他的值
-        GlobalMaterialLocalizations.delegate,
-        // 对应的Cupertino风格
-        GlobalCupertinoLocalizations.delegate,
-        // 指定默认的文本排列方向, 由左到右或由右到左
-        GlobalWidgetsLocalizations.delegate,
-        AppLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('zh'),
-      ],
-      title: 'Cart Robot',
-      routerConfig: _router,
+    return BlocBuilder<SettingBloc, SettingState>(
+      builder: (context, state) {
+        return MaterialApp.router(
+          theme: ThemeData.light(),
+          darkTheme: ThemeData.dark(),
+          themeMode: state.theme == 'dark' ? ThemeMode.dark : ThemeMode.light,
+          localizationsDelegates: const [
+            // 指定本地化的字符串和一些其他的值
+            GlobalMaterialLocalizations.delegate,
+            // 对应的Cupertino风格
+            GlobalCupertinoLocalizations.delegate,
+            // 指定默认的文本排列方向, 由左到右或由右到左
+            GlobalWidgetsLocalizations.delegate,
+            AppLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en'),
+            Locale('zh'),
+          ],
+          title: 'Cart Robot',
+          routerConfig: _router,
+        );
+      },
     );
   }
 }

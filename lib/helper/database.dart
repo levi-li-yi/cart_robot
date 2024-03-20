@@ -24,7 +24,7 @@ void onCreateDatabase(db, version) async {
   await db.execute(
     "CREATE TABLE user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, age INTEGER, gender TEXT)",
   );
-  // 创建一个设置表
+  // 创建一个设置表(key, value结构)
   await db.execute(
     "CREATE TABLE setting (`key` TEXT NOT NULL PRIMARY KEY, `value` TEXT NOT NULL)",
   );

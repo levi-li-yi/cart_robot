@@ -1,3 +1,8 @@
+/*
+ * @Author: Levi Li
+ * @Date: 2024-03-15 10:57:45
+ * @description: 
+ */
 import 'package:sqflite/sqflite.dart';
 
 class SettingRepository {
@@ -12,12 +17,13 @@ class SettingRepository {
   // [
   //  {'key': 'version', 'value': '1.0.0'},
   //  {'key': 'locale', 'value': 'en'},
+  //  {'key': 'theme', 'value': 'light'},
   //  ...
   // ]
   Future<void> loadSetting() async {
     List<Map<String, Object?>> kvs = await db.query('setting');
 
-    _setting.clear();
+    // _setting.clear();
     for (var kv in kvs) {
       _setting[kv['key'] as String] = kv['value'] as String;
     }

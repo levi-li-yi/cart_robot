@@ -3,6 +3,7 @@
  * @Date: 2024-03-13 11:08:52
  * @description: 
  */
+import 'package:cart/bloc/setting/setting_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
@@ -45,15 +46,23 @@ class _HomePageState extends State<HomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: BlocConsumer<UserBloc, UserState>(
-          listener: _listener,
-          builder: (context, state) {
-            return ListView.builder(
-              itemCount: state.dataList!.length,
-              itemBuilder: (context, index) {
-                return ListTile(title: Text(state.dataList![index].name));
-              },
-            );
+        // child: BlocConsumer<UserBloc, UserState>(
+        //   listener: _listener,
+        //   builder: (context, state) {
+        //     return ListView.builder(
+        //       itemCount: state.dataList!.length,
+        //       itemBuilder: (context, index) {
+        //         return ListTile(title: Text(state.dataList![index].name));
+        //       },
+        //     );
+        //   },
+        // ),
+        child: ElevatedButton(
+          child: const Text('切换主题'),
+          onPressed: () {
+            final currentTheme = context.read<SettingBloc>().state.theme;
+            context.read<SettingBloc>().add(ThemeChangedEvent(
+                theme: currentTheme == 'light' ? 'dark' : 'light'));
           },
         ),
       ),

@@ -7,14 +7,16 @@
 class Setting {
   final String? version;
   final String? locale;
+  final String? theme;
 
-  Setting({this.version, this.locale});
+  Setting({this.version, this.locale, this.theme});
 
   // toJson
   Map<String, dynamic> toJson() {
     return {
       'version': version,
       'locale': locale,
+      'theme': theme,
     };
   }
 
@@ -23,6 +25,7 @@ class Setting {
     return Setting(
       version: json['version'],
       locale: json['locale'],
+      theme: json['theme'],
     );
   }
 }

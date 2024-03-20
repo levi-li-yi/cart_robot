@@ -4,10 +4,7 @@
  * @description: 
  */
 import 'package:bloc/bloc.dart';
-import 'package:flutter/rendering.dart';
-import 'package:meta/meta.dart';
 
-import 'package:cart/sqflite/model/user_model.dart';
 import 'package:cart/sqflite/repository/user_repository.dart';
 import 'package:cart/service/user_service.dart';
 import 'package:cart/bloc/base_state.dart';

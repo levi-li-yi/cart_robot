@@ -1,9 +1,12 @@
+/*
+ * @Author: Levi Li
+ * @Date: 2024-03-15 10:15:20
+ * @description: 
+ */
 part of 'setting_bloc.dart';
 
-@immutable
-abstract class SettingState extends Equatable {
-  const SettingState();
+class SettingState {
+  final String theme;
 
-  @override
-  List<Object?> get props => [];
+  SettingState({required this.theme});
 }
