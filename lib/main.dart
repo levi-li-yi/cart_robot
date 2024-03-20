@@ -18,6 +18,7 @@ import 'package:cart/constant/database_constants.dart';
 import 'package:cart/helper/logger.dart';
 import 'package:cart/helper/database.dart';
 import 'package:cart/helper/env.dart';
+import 'package:cart/helper/http.dart' as http;
 
 // user bloc、repository、service
 import 'package:cart/bloc/user/user_bloc.dart';
@@ -29,6 +30,7 @@ import 'package:cart/sqflite/repository/setting_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  http.HttpClient.init();
 
   // 环境配置
   Config? config;
@@ -66,12 +68,12 @@ void main() async {
 
   // 设置状态与持久化
   final SettingRepository settingRepository = SettingRepository(db);
-  final SettingBloc settingBloc = SettingBloc(settingRepository);
   // 用户状态与持久化
   final UserRepository userRepository = UserRepository(db);
   final UserService userService = UserService();
 
   runApp(MultiBlocProvider(
+    // 在全局一次性注入多个Bloc或Cubit实例
     providers: [
       BlocProvider<SettingBloc>(
         create: (BuildContext context) => SettingBloc(settingRepository),
@@ -100,8 +102,8 @@ class MyApp extends StatelessWidget {
     return BlocBuilder<SettingBloc, SettingState>(
       builder: (context, state) {
         return MaterialApp.router(
-          theme: ThemeData.light(),
-          darkTheme: ThemeData.dark(),
+          theme: createLightThemeData(),
+          darkTheme: createDarkThemeData(),
           themeMode: state.theme == 'dark' ? ThemeMode.dark : ThemeMode.light,
           localizationsDelegates: const [
             // 指定本地化的字符串和一些其他的值
@@ -122,4 +124,14 @@ class MyApp extends StatelessWidget {
       },
     );
   }
+}
+
+// 自定义明亮主题
+ThemeData createLightThemeData() {
+  return ThemeData.light().copyWith();
+}
+
+// 自定义暗色主题
+ThemeData createDarkThemeData() {
+  return ThemeData.dark().copyWith();
 }
