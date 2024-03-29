@@ -1,125 +1,142 @@
+/*
+ * @Author: Levi Li
+ * @Date: 2024-03-13 09:53:35
+ * @description: 
+ */
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
+import 'package:path/path.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'package:cart/helper/path.dart';
+import 'package:cart/helper/platform.dart';
+import 'package:cart/constant/database_constants.dart';
+import 'package:cart/helper/logger.dart';
+import 'package:cart/helper/database.dart';
+import 'package:cart/helper/env.dart';
+import 'package:cart/helper/http.dart' as http;
+
+// pages
+import 'package:cart/screens/home_screen.dart';
+
+// user bloc、repository、service
+import 'package:cart/bloc/user/user_bloc.dart';
+import 'package:cart/sqflite/repository/user_repository.dart';
+import 'package:cart/service/user_service.dart';
+// setting bloc、repository
+import 'package:cart/bloc/setting/setting_bloc.dart';
+import 'package:cart/sqflite/repository/setting_repository.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  http.HttpClient.init();
+
+  // 环境配置
+  Config? config;
+  config = getEnv();
+  print('config ${config.appMode}');
+
+  // 初始化路径，获取到系统相关的文档、缓存目录
+  await PathHelper().init();
+
+  // 桌面端数据库初始化
+  if (PlatformTool.isWeb()) {
+    databaseFactory = databaseFactoryFfiWeb;
+  } else if (PlatformTool.isLinux() ||
+      PlatformTool.isIOS() ||
+      PlatformTool.isWindows()) {
+    sqfliteFfiInit();
+    // 设置数据库路径
+    databaseFactory = databaseFactoryFfi;
+    var path = absolute(join(PathHelper().getHomePath, 'database'));
+    databaseFactory.setDatabasesPath(path);
+  }
+
+  // 连接数据库
+  final db = await databaseFactory.openDatabase(
+    'system.db',
+    options: OpenDatabaseOptions(
+      version: databaseSchemaVersion,
+      // 数据库第一次创建时的回调
+      onCreate: onCreateDatabase,
+      // 数据库升级时的回调
+      // onUpgrade: (db, oldVersion, newVersion) async {},
+      onOpen: (db) {
+        Logger.instance.i('数据库存储路径：${db.path}');
+      },
+    ),
+  );
+
+  // 设置状态与持久化
+  final SettingRepository settingRepository = SettingRepository(db);
+  // 用户状态与持久化
+  final UserRepository userRepository = UserRepository(db);
+  final UserService userService = UserService();
+
+  runApp(MultiBlocProvider(
+    // 在全局一次性注入多个Bloc或Cubit实例
+    providers: [
+      BlocProvider<SettingBloc>(
+        create: (BuildContext context) => SettingBloc(settingRepository),
+      ),
+      BlocProvider<UserBloc>(
+        create: (BuildContext context) => UserBloc(userService, userRepository),
+      ),
+    ],
+    child: const MyApp(),
+  ));
 }
+
+final GoRouter _router = GoRouter(routes: <RouteBase>[
+  GoRoute(
+    path: '/',
+    builder: (BuildContext context, GoRouterState state) {
+      return const HomePage(title: '首页');
+    },
+  ),
+]);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+    return BlocBuilder<SettingBloc, SettingState>(
+      builder: (context, state) {
+        return MaterialApp.router(
+          theme: createLightThemeData(),
+          darkTheme: createDarkThemeData(),
+          themeMode: state.theme == 'dark' ? ThemeMode.dark : ThemeMode.light,
+          localizationsDelegates: const [
+            // 指定本地化的字符串和一些其他的值
+            GlobalMaterialLocalizations.delegate,
+            // 对应的Cupertino风格
+            GlobalCupertinoLocalizations.delegate,
+            // 指定默认的文本排列方向, 由左到右或由右到左
+            GlobalWidgetsLocalizations.delegate,
+            AppLocalizations.delegate,
           ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+          supportedLocales: const [
+            Locale('en'),
+            Locale('zh'),
+          ],
+          title: 'Cart Robot',
+          routerConfig: _router,
+        );
+      },
     );
   }
+}
+
+// 自定义明亮主题
+ThemeData createLightThemeData() {
+  return ThemeData.light().copyWith();
+}
+
+// 自定义暗色主题
+ThemeData createDarkThemeData() {
+  return ThemeData.dark().copyWith();
 }
