@@ -26,8 +26,10 @@ import 'package:cart/theme/theme.dart';
 // l10n
 import 'package:cart/generated/l10n.dart';
 
-// pages
+// widgets
 import 'package:cart/widgets/app_scaffold.dart';
+import 'package:cart/widgets/transition_resolver.dart';
+// pages
 import 'package:cart/screens/home_screen.dart';
 
 // user bloc、repository、service
@@ -98,14 +100,19 @@ void main() async {
   ));
 }
 
-final List<RouteBase> _routes = [
-  GoRoute(
-    path: '/home',
-    builder: (BuildContext context, GoRouterState state) {
-      return const HomePage(title: '首页');
-    },
-  ),
-];
+List<RouteBase> _getRoutes(GlobalKey<NavigatorState> key) {
+  return [
+    GoRoute(
+      path: '/home',
+      parentNavigatorKey: key,
+      pageBuilder: (context, state) =>
+          transitionResolver(const HomePage(title: '首页')),
+      // builder: (BuildContext context, GoRouterState state) {
+      //   return const HomePage(title: '首页');
+      // },
+    ),
+  ];
+}
 
 class MyApp extends StatefulWidget {
   // 页面路由
@@ -126,7 +133,7 @@ class MyApp extends StatefulWidget {
                 child: child,
               );
             },
-            routes: _routes,
+            routes: _getRoutes(_shellNavigatorKey),
           ),
         ]);
   }
