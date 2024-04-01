@@ -12,9 +12,15 @@ import 'package:flutter/material.dart';
 class CustomColors extends ThemeExtension<CustomColors> {
   const CustomColors({
     this.backgroundContainerColor,
+    this.linkColor,
+    this.backgroundColor,
   });
   // 应用根容器背景色
   final Color? backgroundContainerColor;
+  // 触发跳转颜色
+  final Color? linkColor;
+  // 背景色
+  final Color? backgroundColor;
 
   // 线性插值，平滑过渡主题切换
   @override
@@ -29,27 +35,36 @@ class CustomColors extends ThemeExtension<CustomColors> {
     return CustomColors(
       backgroundContainerColor: Color.lerp(
           backgroundContainerColor, other.backgroundContainerColor, t),
+      backgroundColor: Color.lerp(backgroundColor, other.backgroundColor, t),
     );
   }
 
   // 明亮主题
   static const light = CustomColors(
     backgroundContainerColor: Color.fromARGB(255, 234, 234, 234),
+    linkColor: Color.fromARGB(255, 9, 185, 85),
+    backgroundColor: Colors.white,
   );
 
   // 暗色主题
   static const dark = CustomColors(
     backgroundContainerColor: Color.fromARGB(255, 41, 41, 41),
+    linkColor: Color.fromARGB(255, 9, 185, 85),
+    backgroundColor: Color.fromARGB(255, 48, 48, 48),
   );
 
   // 扩展主题复制
   @override
   ThemeExtension<CustomColors> copyWith({
     Color? backgroundContainerColor,
+    Color? linkColor,
+    Color? backgroundColor,
   }) {
     return CustomColors(
       backgroundContainerColor:
           backgroundContainerColor ?? this.backgroundContainerColor,
+      linkColor: linkColor ?? this.linkColor,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
     );
   }
 }

@@ -54,10 +54,15 @@
 
 <!-- run dev -->
 ## run dev
-flutter run --dart-define=ENV=dev
+# flutter run --dart-define=ENV=dev
 ## 打包成在线版
-flutter build apk --dart-define=ENV=server
+# flutter build apk --dart-define=ENV=server
 ## 打包成离线版
-flutter build apk --dart-define=ENV=local
+# flutter build apk --dart-define=ENV=local
 ## 打包成第三方服务版
-flutter build apk --dart-define=ENV=hybrid
+# flutter build apk --dart-define=ENV=hybrid
+
+
+<!-- 自动生成图片、颜色、语言 -->
+# flutter pub run build_runner build
+# flutter pub run build_runner watch

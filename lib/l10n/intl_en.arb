@@ -2,5 +2,17 @@
   "hello": "hello",
   "@hello": {
     "description": "A friendly greeting."
+  },
+  "home": "home",
+  "@home": {
+    "description": "A friendly greeting."
+  },
+  "my": "my",
+  "@my": {
+    "description": "A friendly greeting."
+  },
+  "setting": "setting",
+  "@setting": {
+    "description": "A friendly greeting."
   }
 }

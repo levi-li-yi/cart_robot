@@ -2,5 +2,17 @@
   "hello": "你好",
   "@hello": {
     "description": "A friendly greeting."
+  },
+  "home": "主页",
+  "@home": {
+    "description": "A friendly greeting."
+  },
+  "my": "我的",
+  "@my": {
+    "description": "A friendly greeting."
+  },
+  "setting": "设置",
+  "@setting": {
+    "description": "A friendly greeting."
   }
 }

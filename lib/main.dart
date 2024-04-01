@@ -20,7 +20,14 @@ import 'package:cart/helper/database.dart';
 import 'package:cart/helper/env.dart';
 import 'package:cart/helper/http.dart' as http;
 
+// theme
+import 'package:cart/theme/custom_theme.dart';
+import 'package:cart/theme/theme.dart';
+// l10n
+import 'package:cart/generated/l10n.dart';
+
 // pages
+import 'package:cart/widgets/app_scaffold.dart';
 import 'package:cart/screens/home_screen.dart';
 
 // user bloc、repository、service
@@ -87,30 +94,60 @@ void main() async {
         create: (BuildContext context) => UserBloc(userService, userRepository),
       ),
     ],
-    child: const MyApp(),
+    child: MyApp(),
   ));
 }
 
-final GoRouter _router = GoRouter(routes: <RouteBase>[
+final List<RouteBase> _routes = [
   GoRoute(
-    path: '/',
+    path: '/home',
     builder: (BuildContext context, GoRouterState state) {
       return const HomePage(title: '首页');
     },
   ),
-]);
+];
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  // 页面路由
+  late final GoRouter _router;
+
+  final _rootNavigatorKey = GlobalKey<NavigatorState>();
+  final _shellNavigatorKey = GlobalKey<NavigatorState>();
+
+  MyApp({super.key}) {
+    _router = GoRouter(
+        initialLocation: '/home',
+        navigatorKey: _rootNavigatorKey,
+        routes: [
+          ShellRoute(
+            navigatorKey: _shellNavigatorKey,
+            builder: (context, state, child) {
+              return AppScaffold(
+                child: child,
+              );
+            },
+            routes: _routes,
+          ),
+        ]);
+  }
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SettingBloc, SettingState>(
       builder: (context, state) {
+        // final appTheme = context.watch<AppTheme>();
+
         return MaterialApp.router(
           theme: createLightThemeData(),
           darkTheme: createDarkThemeData(),
           themeMode: state.theme == 'dark' ? ThemeMode.dark : ThemeMode.light,
           localizationsDelegates: const [
+            S.delegate,
             // 指定本地化的字符串和一些其他的值
             GlobalMaterialLocalizations.delegate,
             // 对应的Cupertino风格
@@ -124,7 +161,7 @@ class MyApp extends StatelessWidget {
             Locale('zh'),
           ],
           title: 'Cart Robot',
-          routerConfig: _router,
+          routerConfig: widget._router,
         );
       },
     );
@@ -133,10 +170,64 @@ class MyApp extends StatelessWidget {
 
 // 自定义明亮主题
 ThemeData createLightThemeData() {
-  return ThemeData.light().copyWith();
+  return ThemeData.light().copyWith(
+    extensions: [CustomColors.light],
+    useMaterial3: true,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.transparent,
+      scrolledUnderElevation: 0,
+    ),
+    iconButtonTheme: PlatformTool.isMacOS()
+        ? IconButtonThemeData(
+            style: ButtonStyle(
+              overlayColor: MaterialStateProperty.all(Colors.transparent),
+            ),
+          )
+        : null,
+    dividerColor: Colors.transparent,
+    dialogBackgroundColor: Colors.white,
+    dialogTheme: DialogTheme(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      elevation: 0,
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: const Color.fromARGB(255, 9, 185, 85),
+      ),
+    ),
+  );
 }
 
 // 自定义暗色主题
 ThemeData createDarkThemeData() {
-  return ThemeData.dark().copyWith();
+  return ThemeData.dark().copyWith(
+    extensions: [CustomColors.dark],
+    useMaterial3: true,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Colors.transparent,
+      scrolledUnderElevation: 0,
+    ),
+    iconButtonTheme: PlatformTool.isMacOS()
+        ? IconButtonThemeData(
+            style: ButtonStyle(
+              overlayColor: MaterialStateProperty.all(Colors.transparent),
+            ),
+          )
+        : null,
+    dividerColor: Colors.transparent,
+    dialogBackgroundColor: const Color.fromARGB(255, 48, 48, 48),
+    dialogTheme: DialogTheme(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      elevation: 0,
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: const Color.fromARGB(255, 9, 185, 85),
+      ),
+    ),
+  );
 }
