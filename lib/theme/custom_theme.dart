@@ -14,6 +14,9 @@ class CustomColors extends ThemeExtension<CustomColors> {
     this.backgroundContainerColor,
     this.linkColor,
     this.backgroundColor,
+    this.appBarBackgroundImage,
+    this.weakLinkColor,
+    this.columnBlockBackgroundColor,
   });
   // 应用根容器背景色
   final Color? backgroundContainerColor;
@@ -21,6 +24,10 @@ class CustomColors extends ThemeExtension<CustomColors> {
   final Color? linkColor;
   // 背景色
   final Color? backgroundColor;
+  final Color? weakLinkColor;
+  // app bar背景图
+  final String? appBarBackgroundImage;
+  final Color? columnBlockBackgroundColor;
 
   // 线性插值，平滑过渡主题切换
   @override
@@ -36,6 +43,11 @@ class CustomColors extends ThemeExtension<CustomColors> {
       backgroundContainerColor: Color.lerp(
           backgroundContainerColor, other.backgroundContainerColor, t),
       backgroundColor: Color.lerp(backgroundColor, other.backgroundColor, t),
+      weakLinkColor: Color.lerp(weakLinkColor, other.weakLinkColor, t),
+      // 图片地址
+      appBarBackgroundImage: appBarBackgroundImage,
+      columnBlockBackgroundColor: Color.lerp(
+          columnBlockBackgroundColor, other.columnBlockBackgroundColor, t),
     );
   }
 
@@ -44,6 +56,10 @@ class CustomColors extends ThemeExtension<CustomColors> {
     backgroundContainerColor: Color.fromARGB(255, 234, 234, 234),
     linkColor: Color.fromARGB(255, 9, 185, 85),
     backgroundColor: Colors.white,
+    weakLinkColor: Color.fromARGB(255, 117, 117, 117),
+    // 图片
+    appBarBackgroundImage: 'assets/background.png',
+    columnBlockBackgroundColor: Color.fromARGB(255, 255, 255, 255),
   );
 
   // 暗色主题
@@ -51,6 +67,10 @@ class CustomColors extends ThemeExtension<CustomColors> {
     backgroundContainerColor: Color.fromARGB(255, 41, 41, 41),
     linkColor: Color.fromARGB(255, 9, 185, 85),
     backgroundColor: Color.fromARGB(255, 48, 48, 48),
+    weakLinkColor: Color.fromARGB(255, 218, 218, 218),
+    // 图片
+    appBarBackgroundImage: 'assets/background.png',
+    columnBlockBackgroundColor: Color.fromARGB(255, 52, 52, 52),
   );
 
   // 扩展主题复制
@@ -59,12 +79,20 @@ class CustomColors extends ThemeExtension<CustomColors> {
     Color? backgroundContainerColor,
     Color? linkColor,
     Color? backgroundColor,
+    Color? weakLinkColor,
+    Color? columnBlockBackgroundColor,
+    String? appBarBackgroundImage,
   }) {
     return CustomColors(
       backgroundContainerColor:
           backgroundContainerColor ?? this.backgroundContainerColor,
       linkColor: linkColor ?? this.linkColor,
       backgroundColor: backgroundColor ?? this.backgroundColor,
+      weakLinkColor: weakLinkColor ?? this.weakLinkColor,
+      columnBlockBackgroundColor:
+          columnBlockBackgroundColor ?? this.columnBlockBackgroundColor,
+      appBarBackgroundImage:
+          appBarBackgroundImage ?? this.appBarBackgroundImage,
     );
   }
 }

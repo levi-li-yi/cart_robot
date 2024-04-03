@@ -225,6 +225,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.6"
+  custom_sliding_segmented_control:
+    dependency: "direct main"
+    description:
+      name: custom_sliding_segmented_control
+      sha256: "05b73fa48d57218bfdf806bad68a859812b216cd81fe81c6cbefde89f39eb257"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.8.1"
   dart_style:
     dependency: transitive
     description:
@@ -363,6 +371,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_sticky_header:
+    dependency: "direct main"
+    description:
+      name: flutter_sticky_header
+      sha256: "017f398fbb45a589e01491861ca20eb6570a763fd9f3888165a978e11248c709"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.6.5"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -850,6 +866,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.2.2"
+  value_layout_builder:
+    dependency: transitive
+    description:
+      name: value_layout_builder
+      sha256: "98202ec1807e94ac72725b7f0d15027afde513c55c69ff3f41bcfccb950831bc"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.3.1"
   vector_math:
     dependency: transitive
     description:

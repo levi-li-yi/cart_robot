@@ -30,6 +30,8 @@ dependencies:
   cached_network_image: ^3.3.1
   flutter_cache_manager: ^3.3.1
   animations: ^2.0.8
+  flutter_sticky_header: ^0.6.5
+  custom_sliding_segmented_control: ^1.8.1
 
 dev_dependencies:
   flutter_test:
@@ -45,7 +47,7 @@ flutter:
   generate: true
 
   assets:
-    - assets/images/
+    - assets/images/background.png
 
 flutter_gen:
   output: lib/generated/
