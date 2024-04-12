@@ -50,40 +50,50 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `hello`
+  /// `你好`
   String get hello {
     return Intl.message(
-      'hello',
+      '你好',
       name: 'hello',
       desc: 'A friendly greeting.',
       args: [],
     );
   }
 
-  /// `home`
+  /// `记录`
   String get home {
     return Intl.message(
-      'home',
+      '记录',
       name: 'home',
       desc: 'A friendly greeting.',
       args: [],
     );
   }
 
-  /// `my`
-  String get my {
+  /// `诊断`
+  String get diagnosis {
     return Intl.message(
-      'my',
-      name: 'my',
+      '诊断',
+      name: 'diagnosis',
       desc: 'A friendly greeting.',
       args: [],
     );
   }
 
-  /// `setting`
+  /// `哨兵`
+  String get sentinel {
+    return Intl.message(
+      '哨兵',
+      name: 'sentinel',
+      desc: 'A friendly greeting.',
+      args: [],
+    );
+  }
+
+  /// `我的`
   String get setting {
     return Intl.message(
-      'setting',
+      '我的',
       name: 'setting',
       desc: 'A friendly greeting.',
       args: [],

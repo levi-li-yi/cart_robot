@@ -63,6 +63,6 @@
 # flutter build apk --dart-define=ENV=hybrid
 
 
-<!-- 自动生成图片、颜色、语言 -->
+<!-- 自动生成图片、颜色、语言(有更改时多种语言包内容需要同步) -->
 # flutter pub run build_runner build
 # flutter pub run build_runner watch

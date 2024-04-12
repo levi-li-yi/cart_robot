@@ -1,17 +1,21 @@
 {
-  "hello": "hello",
+  "hello": "你好",
   "@hello": {
     "description": "A friendly greeting."
   },
-  "home": "home",
+  "home": "记录",
   "@home": {
     "description": "A friendly greeting."
   },
-  "my": "my",
-  "@my": {
+  "diagnosis": "诊断",
+  "@diagnosis": {
     "description": "A friendly greeting."
   },
-  "setting": "setting",
+  "sentinel": "哨兵",
+  "@sentinel": {
+    "description": "A friendly greeting."
+  },
+  "setting": "我的",
   "@setting": {
     "description": "A friendly greeting."
   }

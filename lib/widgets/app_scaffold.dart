@@ -82,10 +82,20 @@ class _AppScaffoldState extends State<AppScaffold> {
           icon: Icons.group_outlined,
           activatedIcon: Icons.group,
           activatedColor: customColors.linkColor,
-          label: S.of(context).my,
+          label: S.of(context).diagnosis,
           activated: currentIndex == index,
         ),
-        route: '/my',
+        route: '/diagnosis',
+      ),
+      BottomNavigationBarConfig(
+        builder: (index, customColors) => createAnimatedNavBarItem(
+          icon: Icons.manage_accounts_outlined,
+          activatedIcon: Icons.manage_accounts,
+          activatedColor: customColors.linkColor,
+          label: S.of(context).sentinel,
+          activated: currentIndex == index,
+        ),
+        route: '/sentinel',
       ),
       BottomNavigationBarConfig(
         builder: (index, customColors) => createAnimatedNavBarItem(

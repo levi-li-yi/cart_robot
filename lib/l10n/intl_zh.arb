@@ -3,15 +3,19 @@
   "@hello": {
     "description": "A friendly greeting."
   },
-  "home": "主页",
+  "home": "记录",
   "@home": {
     "description": "A friendly greeting."
   },
-  "my": "我的",
-  "@my": {
+  "diagnosis": "诊断",
+  "@diagnosis": {
     "description": "A friendly greeting."
   },
-  "setting": "设置",
+  "sentinel": "哨兵",
+  "@sentinel": {
+    "description": "A friendly greeting."
+  },
+  "setting": "我的",
   "@setting": {
     "description": "A friendly greeting."
   }
