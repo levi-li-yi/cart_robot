@@ -32,6 +32,10 @@ dependencies:
   animations: ^2.0.8
   flutter_sticky_header: ^0.6.5
   custom_sliding_segmented_control: ^1.8.1
+  scene:
+    git:
+      url: 'http://192.168.0.140/ytc_frontend/scene.git'
+      ref: main
 
 dev_dependencies:
   flutter_test:
@@ -40,6 +44,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   build_runner: ^2.4.9
   flutter_gen_runner: ^5.4.0
+
 
 flutter:
   uses-material-design: true

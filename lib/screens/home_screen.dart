@@ -8,8 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:cart/bloc/user/user_bloc.dart';
+
+import 'package:scene/scene.dart';
 
 class HomePage extends StatefulWidget {
   final String title;

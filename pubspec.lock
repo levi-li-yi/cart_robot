@@ -701,6 +701,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.27.7"
+  scene:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: main
+      resolved-ref: c34d231ed5901bda67b4c66e52daa5a8f566d4f0
+      url: "http://192.168.0.140/ytc_frontend/scene.git"
+    source: git
+    version: "0.0.1"
   shelf:
     dependency: transitive
     description:
