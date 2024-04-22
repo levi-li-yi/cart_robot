@@ -11,6 +11,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 import 'package:path/path.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:camera/camera.dart';
 
 import 'package:cart/helper/path.dart';
 import 'package:cart/helper/platform.dart';
@@ -105,8 +106,7 @@ List<RouteBase> _getRoutes(GlobalKey<NavigatorState> key) {
     GoRoute(
       path: '/home',
       parentNavigatorKey: key,
-      pageBuilder: (context, state) =>
-          transitionResolver(const HomePage(title: '首页')),
+      pageBuilder: (context, state) => transitionResolver(HomeScreen()),
       // builder: (BuildContext context, GoRouterState state) {
       //   return const HomePage(title: '首页');
       // },
@@ -179,7 +179,6 @@ class _MyAppState extends State<MyApp> {
 ThemeData createLightThemeData() {
   return ThemeData.light().copyWith(
     extensions: [CustomColors.light],
-    useMaterial3: true,
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.transparent,
       scrolledUnderElevation: 0,
@@ -211,7 +210,6 @@ ThemeData createLightThemeData() {
 ThemeData createDarkThemeData() {
   return ThemeData.dark().copyWith(
     extensions: [CustomColors.dark],
-    useMaterial3: true,
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.transparent,
       scrolledUnderElevation: 0,

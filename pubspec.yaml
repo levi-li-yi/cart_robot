@@ -36,6 +36,17 @@ dependencies:
     git:
       url: 'http://192.168.0.140/ytc_frontend/scene.git'
       ref: main
+  audioplayers: ^6.0.0
+  better_player: ^0.0.83
+  camera: ^0.10.5+9
+  conditional_builder_null_safety: ^0.0.6
+  ffmpeg_kit_flutter: ^6.0.3
+  flutter_svg: ^2.0.9
+  flutter_video_info: ^1.3.2
+  fluttertoast: ^8.2.4
+  gallery_saver: ^2.3.2
+  flutter_webrtc: ^0.10.3
+  permission_handler: ^11.3.1
 
 dev_dependencies:
   flutter_test:
@@ -53,6 +64,10 @@ flutter:
 
   assets:
     - assets/images/background.png
+    - assets/images/Camera.png
+    - assets/images/music.svg
+    - assets/images/stop.svg
+    - assets/images/play.svg
 
 flutter_gen:
   output: lib/generated/
