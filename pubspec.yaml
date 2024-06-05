@@ -47,6 +47,8 @@ dependencies:
   gallery_saver: ^2.3.2
   flutter_webrtc: ^0.10.3
   permission_handler: ^11.3.1
+  video_player: ^2.8.6
+  processing_camera_image: ^0.0.12
 
 dev_dependencies:
   flutter_test:

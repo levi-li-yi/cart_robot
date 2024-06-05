@@ -17,6 +17,7 @@ class PathHelper {
   late final String supportPath;
 
   init() async {
+    // 存放不必备份的临时文件路径
     try {
       cachePath =
           (await getApplicationCacheDirectory()).path.replaceAll('\\', '/');
@@ -24,6 +25,7 @@ class PathHelper {
       cachePath = '';
     }
 
+    // 当前应用可以访问的路径，保存应用的个人设置、用户数据或者其他需要持久保存的信息。
     try {
       documentsPath =
           (await getApplicationDocumentsDirectory()).path.replaceAll('\\', '/');
@@ -31,6 +33,7 @@ class PathHelper {
       documentsPath = '';
     }
 
+    // 非用户生成的数据文件存储路径
     try {
       supportPath =
           (await getApplicationSupportDirectory()).path.replaceAll('\\', '/');

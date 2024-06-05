@@ -58,8 +58,23 @@ class _HomeScreenState extends State<HomeScreen> {
     _startRecording();
     _timer = Timer.periodic(const Duration(seconds: 20), (timer) {
       print('Timer stop!');
-      // _stopRecording();
+      _stopRecording();
+
+      if (_signal == true) {
+        // 有监测信号，中断计时器
+        _timer?.cancel();
+      } else {
+        // 没有监测信号，停止录制
+        _stopRecording();
+      }
     });
+  }
+
+  // 模拟接收监测信号
+  void _receiveSignal() {
+    print('Receive signal!');
+    // _timer?.cancel();
+    // _stopRecording();
   }
 
   // 锁定或释放相机曝光和聚焦(实际业务中，由启动和关闭录制按钮切换模型)（不同机型表现不一样，红米手机可以）
@@ -88,19 +103,16 @@ class _HomeScreenState extends State<HomeScreen> {
     if (_isRecording) return;
     await _cameraController!.setFocusMode(FocusMode.locked);
     await _cameraController!.setExposureMode(ExposureMode.locked);
+    try {
+      await _cameraController!.startVideoRecording();
+      setState(() {
+        _isRecording = true;
+      });
+    } catch (e) {
+      print(e);
+    }
 
-    // try {
-    //   await _cameraController!.startVideoRecording();
-    //   setState(() {
-    //     _isRecording = true;
-    //   });
-    // } catch (e) {
-    //   print(e);
-    // }
-
-    _cameraController!.startImageStream((image) {
-      print('stream');
-    });
+    _cameraController!.startImageStream((image) => {});
   }
 
   // 结束录制

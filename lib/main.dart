@@ -106,7 +106,7 @@ List<RouteBase> _getRoutes(GlobalKey<NavigatorState> key) {
     GoRoute(
       path: '/home',
       parentNavigatorKey: key,
-      pageBuilder: (context, state) => transitionResolver(HomeScreen()),
+      pageBuilder: (context, state) => transitionResolver(const HomeScreen()),
       // builder: (BuildContext context, GoRouterState state) {
       //   return const HomePage(title: '首页');
       // },
