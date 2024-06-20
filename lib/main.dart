@@ -32,6 +32,7 @@ import 'package:cart/widgets/app_scaffold.dart';
 import 'package:cart/widgets/transition_resolver.dart';
 // pages
 import 'package:cart/screens/home_screen.dart';
+import 'package:cart/screens/diagnosis_screen.dart';
 
 // user bloc、repository、service
 import 'package:cart/bloc/user/user_bloc.dart';
@@ -110,6 +111,13 @@ List<RouteBase> _getRoutes(GlobalKey<NavigatorState> key) {
       // builder: (BuildContext context, GoRouterState state) {
       //   return const HomePage(title: '首页');
       // },
+    ),
+    GoRoute(
+      path: '/diagnosis',
+      parentNavigatorKey: key,
+      pageBuilder: (context, state) => transitionResolver(
+        const DiagnosisScreen(),
+      ),
     ),
   ];
 }
